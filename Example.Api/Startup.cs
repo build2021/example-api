@@ -10,8 +10,6 @@ namespace Example.Api
     using AutoMapper;
 
     using Example.Api.Infrastructure;
-    using Example.Api.Infrastructure.ApplicationModels;
-    using Example.Api.Infrastructure.Filters;
     using Example.Api.Infrastructure.Json;
     using Example.Api.Services;
     using Example.Api.Settings;
@@ -27,7 +25,8 @@ namespace Example.Api
     using Microsoft.OpenApi.Models;
 
     using Prometheus;
-
+    using Smart.AspNetCore;
+    using Smart.AspNetCore.ApplicationModels;
     using Smart.Data;
     using Smart.Data.Mapper;
     using Smart.Data.SqlClient;
@@ -61,7 +60,6 @@ namespace Example.Api
             services.AddSingleton(serverSetting);
 
             // Mvc
-            services.AddExceptionLogging();
             services.AddTimeLogging(options =>
             {
                 options.Threshold = serverSetting.LongTimeThreshold;
@@ -75,7 +73,6 @@ namespace Example.Api
             services
                 .AddControllers(options =>
                 {
-                    options.Filters.AddExceptionLogging();
                     options.Filters.AddTimeLogging();
                     options.Conventions.Add(new LowercaseControllerModelConvention());
                 })
